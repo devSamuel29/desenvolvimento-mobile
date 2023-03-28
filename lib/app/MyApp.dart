@@ -1,9 +1,9 @@
-import 'Home.dart';
-import 'LoginPage.dart';
-import 'LoadingScreen.dart';
+import '../Routes.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -16,12 +16,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoadingScreen(),
-        '/home': (context) => Home(),
-        '/login': (context) => LoginPage(),
-      }
+      initialRoute: SPLASH_PAGE,
+      onGenerateRoute: Routes().mainRoutes(),
     );
   }
 }

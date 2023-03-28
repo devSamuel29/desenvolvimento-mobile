@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -36,85 +38,85 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  Widget Teddy() {
+    return Container(
+      height: 170,
+      width: 300,
+      child: FlareActor(
+        'assets/Teddy.flr',
+        alignment: Alignment.center,
+        fit: BoxFit.cover,
+        animation: _animationType,
+        callback: (currentAnimation) {
+          setState(() => this._animationType = 'idle');
+        },
+      ),
+    );
+  }
+
+  Widget LoginForm() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          TextFormField(
+            focusNode: this._emailNode,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              hintText: "Digite seu email...",
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            ),
+          ),
+          SizedBox(height: 10),
+          TextFormField(
+            focusNode: this._passwordNode,
+            obscureText: true,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              hintText: "Digite sua senha...",
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 70,
+            padding: EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple.shade800,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                "Entrar",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple,
-    
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           height: 400,
-          width: 300,
-          
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-          ),
-          child: Center(
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              children: [
-                Container(
-                  height: 300,
-                  width: 300,
-                  child: FlareActor(
-                    'assets/Teddy.flr',
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.contain,
-                    animation: _animationType,
-                    callback: (currentAnimation) {
-                      setState(() => this._animationType = 'idle');
-                    },
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        focusNode: this._emailNode,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Digite seu email...",
-                          contentPadding: EdgeInsets.all(20),
-                        ),
-                      ),
-                      Divider(),
-                      TextFormField(
-                        focusNode: this._passwordNode,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Digite sua senha...",
-                          contentPadding: EdgeInsets.all(20),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 70,
-                        padding: EdgeInsets.only(top: 20),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.purple,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Entrar",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          width: 400,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [Teddy(), LoginForm()],
             ),
           ),
         ),

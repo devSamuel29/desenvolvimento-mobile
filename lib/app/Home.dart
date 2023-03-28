@@ -1,55 +1,62 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple,
+      backgroundColor: Colors.purple.shade800,
       body: Align(
         alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
-            ),
-            color: Colors.white,
-          ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 30),
           child: Row(
-            children: <Widget>[
-              Container(
-                height: 70,
-                padding: EdgeInsets.only(top: 20),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/login');
+                },
+                child: Container(
+                  width: 150,
+                  height: 50,
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
                     ),
                   ),
-                  onPressed: () => {
-                    Navigator.of(context).pushNamed('/login'),
-                  },
-                  child: Text(
-                    "Fazer login",
-                    style: TextStyle(color: Colors.white),
+                  child: Center(
+                    child: Text(
+                      "Fazer login",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-              Container(
-                height: 70,
-                padding: EdgeInsets.only(top: 20),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+              SizedBox(width: 20), // adiciona um espaço de 20 pixels
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/register');
+                },
+                child: Container(
+                  width: 150,
+                  height: 50,
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  onPressed: () {},
-                  child: Text(
-                    "Fazer cadastro",
-                    style: TextStyle(color: Colors.white),
+                  child: Center(
+                    child: Text(
+                      "Fazer cadastro",
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                 ),
               ),
