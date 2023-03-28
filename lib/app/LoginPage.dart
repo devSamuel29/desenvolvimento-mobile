@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String _animationType = 'idle';
   int _passwordCountAnimation = 0;
+  bool _obscureText = true;
 
   FocusNode _emailNode = FocusNode();
   FocusNode _passwordNode = FocusNode();
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget Teddy() {
     return Container(
-      height: 170,
+      height: 200,
       width: 300,
       child: FlareActor(
         'assets/Teddy.flr',
@@ -55,54 +56,58 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget LoginForm() {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            focusNode: this._emailNode,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
+    return Column(
+      children: [
+        TextFormField(
+          focusNode: this._emailNode,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            hintText: "Digite seu email...",
+            contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          ),
+        ),
+        SizedBox(height: 10),
+        TextFormField(
+          focusNode: this._passwordNode,
+          obscureText: _obscureText,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            suffixIcon: IconButton(
+              icon:
+                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            ),
+            hintText: "Digite sua senha...",
+            contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          height: 70,
+          padding: EdgeInsets.only(top: 20),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple.shade800,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              hintText: "Digite seu email...",
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            ),
+            onPressed: () {},
+            child: Text(
+              "Entrar",
+              style: TextStyle(color: Colors.white),
             ),
           ),
-          SizedBox(height: 10),
-          TextFormField(
-            focusNode: this._passwordNode,
-            obscureText: true,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              hintText: "Digite sua senha...",
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 70,
-            padding: EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple.shade800,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onPressed: () {},
-              child: Text(
-                "Entrar",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -112,8 +117,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          height: 400,
-          width: 400,
+          width: 350,
           child: SingleChildScrollView(
             child: Column(
               children: [Teddy(), LoginForm()],
