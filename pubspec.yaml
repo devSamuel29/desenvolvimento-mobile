@@ -10,9 +10,28 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  firebase_auth: ^4.3.0
+  firebase_core: ^2.8.0
   flare_flutter: ^3.0.2
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.19
+  http: ^0.13.5
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/splash.png"
+  android: true
+  ios: true
+
+flutter_icons:
+  image_path: "assets/icon.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon-nobg.png"
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +42,6 @@ flutter:
 
   assets:
     - assets/Teddy.flr
+    - assets/icon.png
+    - assets/icon-nobg.png
+    - assets/splash.png

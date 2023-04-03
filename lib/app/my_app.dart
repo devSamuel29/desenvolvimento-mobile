@@ -1,4 +1,4 @@
-import '../Routes.dart';
+import '../routes.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      initialRoute: SPLASH_PAGE,
+      initialRoute: WELCOME_PAGE,
       onGenerateRoute: Routes().mainRoutes(),
     );
   }
