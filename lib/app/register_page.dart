@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -8,10 +11,30 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPage extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   bool _obscureText = true;
+
+  register() async {
+    try {
+      await context.read<AuthService>().register(email.text, password.text);
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
 
   Widget emailInput() {
     return TextFormField(
+      controller: email,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Digite o email";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -24,6 +47,15 @@ class _RegisterPage extends State<RegisterPage> {
 
   Widget passwordInput() {
     return TextFormField(
+      controller: password,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Digite a senha!";
+        } else if (value.length < 6) {
+          return "A senha deve ter no mínimo 6 caracteres";
+        }
+        return null;
+      },
       obscureText: _obscureText,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -43,11 +75,11 @@ class _RegisterPage extends State<RegisterPage> {
     );
   }
 
-  Widget submitButton(BuildContext context) {
+  Widget submitButton() {
     return Container(
       width: double.infinity,
       height: 70,
-      padding: EdgeInsets.only(top: 150),
+      padding: EdgeInsets.only(top: 15),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.purple.shade800,
@@ -55,7 +87,11 @@ class _RegisterPage extends State<RegisterPage> {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            register();
+          }
+        },
         child: Text(
           "Cadastrar",
           style: TextStyle(color: Colors.white),
@@ -69,15 +105,18 @@ class _RegisterPage extends State<RegisterPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            width: 350,
-            child: Column(
-              children: [
-                emailInput(),
-                SizedBox(height: 10),
-                passwordInput(),
-                submitButton(context),
-              ],
+          child: Form(
+            key: formKey,
+            child: Container(
+              width: 350,
+              child: Column(
+                children: [
+                  emailInput(),
+                  SizedBox(height: 10),
+                  passwordInput(),
+                  submitButton(),
+                ],
+              ),
             ),
           ),
         ),

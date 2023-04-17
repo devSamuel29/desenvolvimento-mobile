@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:provider/provider.dart';
+
+import '../services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,6 +17,18 @@ class _LoginPageState extends State<LoginPage> {
 
   FocusNode _emailNode = FocusNode();
   FocusNode _passwordNode = FocusNode();
+  
+  final formKey = GlobalKey<FormState>();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  login() async {
+    try {
+      await context.read<AuthService>().login(email.text, password.text);
+    } on AuthException catch(e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
 
   Widget teddy() {
     return Container(
@@ -35,7 +50,15 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget emailInput() {
     return TextFormField(
+      controller: email,
       focusNode: this._emailNode,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Digite o email";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -48,8 +71,17 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget passwordInput() {
     return TextFormField(
+      controller: password,
       focusNode: this._passwordNode,
       obscureText: _obscureText,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Digite a senha!";
+        } else if (value.length < 6) {
+          return "A senha deve ter no mínimo 6 caracteres";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -58,8 +90,8 @@ class _LoginPageState extends State<LoginPage> {
           icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
           onPressed: () {
             setState(() {
-                  this._obscureText = !_obscureText;
-                });
+              this._obscureText = !_obscureText;
+            });
           },
         ),
         hintText: "Digite sua senha...",
@@ -80,7 +112,11 @@ class _LoginPageState extends State<LoginPage> {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          if(formKey.currentState!.validate()) {
+            login();
+          }
+        },
         child: Text(
           "Entrar",
           style: TextStyle(color: Colors.white),
@@ -91,8 +127,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    this._passwordNode.addListener(() {
-      if (this._passwordNode.hasFocus) {
+    this._emailNode.addListener(() {
+      if (this._emailNode.hasFocus) {
         setState(() {
           this._animationType = 'hands_up';
         });
@@ -100,7 +136,6 @@ class _LoginPageState extends State<LoginPage> {
         setState(() => {this._animationType = 'hands_down'});
       }
     });
-
     super.initState();
   }
 
@@ -112,14 +147,17 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           width: 350,
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                teddy(),
-                emailInput(),
-                SizedBox(height: 10),
-                passwordInput(),
-                submitButton(),
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  teddy(),
+                  emailInput(),
+                  SizedBox(height: 10),
+                  passwordInput(),
+                  submitButton(),
+                ],
+              ),
             ),
           ),
         ),
