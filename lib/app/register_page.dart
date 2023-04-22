@@ -1,3 +1,4 @@
+import 'package:bugetbuddy/services/db_context.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,19 +12,62 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPage extends State<RegisterPage> {
-  final formKey = GlobalKey<FormState>();
+  final registerFormKey = GlobalKey<FormState>();
+  final name = TextEditingController();
+  final lastname = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
+  final bday = TextEditingController();
 
   bool _obscureText = true;
 
   register() async {
     try {
-      await context.read<AuthService>().register(email.text, password.text);
+      await context.read<DbContext>().register(name.text, lastname.text,
+          email.text, password.text, bday.text);
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
+  }
+
+  Widget nameInput() {
+    return TextFormField(
+      controller: name,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'O campo "nome" é obrigatório';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        icon: Icon(Icons.abc_rounded),
+        hintText: "Digite seu email...",
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      ),
+    );
+  }
+
+  Widget lastnameInput() {
+    return TextFormField(
+      controller: lastname,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'O campo "sobrenome" é obrigatório';
+        }
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        icon: Icon(Icons.abc_rounded),
+        hintText: "Digite seu sobrenome...",
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      ),
+    );
   }
 
   Widget emailInput() {
@@ -39,6 +83,7 @@ class _RegisterPage extends State<RegisterPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
         ),
+        icon: Icon(Icons.email_rounded),
         hintText: "Digite seu email...",
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       ),
@@ -61,6 +106,7 @@ class _RegisterPage extends State<RegisterPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
         ),
+        icon: Icon(Icons.password_rounded),
         hintText: "Digite sua senha...",
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         suffixIcon: IconButton(
@@ -72,6 +118,12 @@ class _RegisterPage extends State<RegisterPage> {
           },
         ),
       ),
+    );
+  }
+
+  Widget bdayInput() {
+    return TextFormField(
+      controller: bday,
     );
   }
 
@@ -88,7 +140,7 @@ class _RegisterPage extends State<RegisterPage> {
           ),
         ),
         onPressed: () {
-          if (formKey.currentState!.validate()) {
+          if (registerFormKey.currentState!.validate()) {
             register();
           }
         },
@@ -106,14 +158,17 @@ class _RegisterPage extends State<RegisterPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Form(
-            key: formKey,
+            key: registerFormKey,
             child: Container(
               width: 350,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  nameInput(),
+                  lastnameInput(),
                   emailInput(),
-                  SizedBox(height: 10),
                   passwordInput(),
+                  bdayInput(),
                   submitButton(),
                 ],
               ),

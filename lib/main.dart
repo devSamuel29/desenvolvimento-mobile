@@ -1,4 +1,4 @@
-import 'package:bugetbuddy/services/auth_service.dart';
+import 'package:bugetbuddy/services/db_context.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +17,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => DbContext()),
       ],
       child: const MyApp(),
     )

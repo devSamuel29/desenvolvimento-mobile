@@ -1,3 +1,4 @@
+import 'package:bugetbuddy/routes.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -7,7 +8,7 @@ class WelcomePage extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
-        Navigator.of(context).pushNamed('/login');
+        Navigator.of(context).pushNamed(LOGIN_PAGE);
       },
       child: Container(
         width: 150,
@@ -34,7 +35,7 @@ class WelcomePage extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
-        Navigator.of(context).pushNamed('/register');
+        Navigator.of(context).pushNamed(REGISTER_PAGE);
       },
       child: Container(
         width: 150,
@@ -61,7 +62,7 @@ class WelcomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/splash.png'),
+          Image.asset('assets/welcome.png'),
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(

@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:947891333173:android:0a5b24c35e757d0745697c',
     messagingSenderId: '947891333173',
     projectId: 'buget-buddy',
+    databaseURL: 'https://buget-buddy-default-rtdb.firebaseio.com',
     storageBucket: 'buget-buddy.appspot.com',
   );
 
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:947891333173:ios:0ef25b8f17c9fe7145697c',
     messagingSenderId: '947891333173',
     projectId: 'buget-buddy',
+    databaseURL: 'https://buget-buddy-default-rtdb.firebaseio.com',
     storageBucket: 'buget-buddy.appspot.com',
     iosClientId: '947891333173-93n0sa0bv86apm5l3fmeolcbamnm8pbc.apps.googleusercontent.com',
     iosBundleId: 'com.example.bugetbuddy',

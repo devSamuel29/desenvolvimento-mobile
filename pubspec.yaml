@@ -9,8 +9,9 @@ environment:
   sdk: ">=2.19.4 <3.0.0"
 
 dependencies:
+  cloud_firestore: ^4.5.2
   cupertino_icons: ^1.0.2
-  dson_adapter: ^1.1.1
+  dson_adapter: ^1.2.0+2
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
   flare_flutter: ^3.0.2
@@ -20,10 +21,11 @@ dependencies:
   flutter_native_splash: ^2.2.19
   http: ^0.13.5
   provider: ^6.0.5
+  uuid: ^3.0.7
 
 flutter_native_splash:
   color: "#FFFFFF"
-  image: "assets/splash.png"
+  image: "assets/welcome.png"
   android: true
   ios: true
 
@@ -32,7 +34,7 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   android: "launcher_icon"
-  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_background: "#cdffd8"
   adaptive_icon_foreground: "assets/icon-nobg.png"
 
 dev_dependencies:
@@ -46,4 +48,4 @@ flutter:
     - assets/Teddy.flr
     - assets/icon.png
     - assets/icon-nobg.png
-    - assets/splash.png
+    - assets/welcome.png

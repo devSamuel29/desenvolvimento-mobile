@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "947891333173",
+    "firebase_url": "https://buget-buddy-default-rtdb.firebaseio.com",
     "project_id": "buget-buddy",
     "storage_bucket": "buget-buddy.appspot.com"
   },

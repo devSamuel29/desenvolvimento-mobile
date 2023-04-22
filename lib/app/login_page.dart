@@ -1,3 +1,4 @@
+import 'package:bugetbuddy/services/db_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +19,13 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode _emailNode = FocusNode();
   FocusNode _passwordNode = FocusNode();
   
-  final formKey = GlobalKey<FormState>();
+  final loginFormKey = GlobalKey<FormState>();
   final email = TextEditingController();
   final password = TextEditingController();
 
   login() async {
     try {
-      await context.read<AuthService>().login(email.text, password.text);
+      await context.read<DbContext>().login(email.text, password.text);
     } on AuthException catch(e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
     }
@@ -113,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         onPressed: () {
-          if(formKey.currentState!.validate()) {
+          if(loginFormKey.currentState!.validate()) {
             login();
           }
         },
@@ -148,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
           width: 350,
           child: SingleChildScrollView(
             child: Form(
-              key: formKey,
+              key: loginFormKey,
               child: Column(
                 children: [
                   teddy(),

@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      initialRoute: AUTH_CHECK,
+      initialRoute: WELCOME_PAGE,
       onGenerateRoute: Routes().mainRoutes(),
     );
   }

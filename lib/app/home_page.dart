@@ -1,3 +1,4 @@
+import 'package:bugetbuddy/services/db_context.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
         child: OutlinedButton(
-          onPressed: () => context.read<AuthService>().logout(),
+          onPressed: () => context.read<DbContext>().logout(),
           style: OutlinedButton.styleFrom(
             backgroundColor: Colors.red,
           ),
