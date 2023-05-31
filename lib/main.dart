@@ -1,4 +1,5 @@
-import 'package:bugetbuddy/services/db_context.dart';
+import 'package:bugetbuddy/services/auth_service.dart';
+import 'package:bugetbuddy/services/google_sign_in.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,9 +18,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => DbContext()),
+        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => GoogleSignInBugetBuddy()),
       ],
-      child: const MyApp(),
-    )
-  );
+    child: const MyApp(),
+  ));
 }

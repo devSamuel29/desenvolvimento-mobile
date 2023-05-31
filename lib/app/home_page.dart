@@ -1,7 +1,5 @@
-import 'package:bugetbuddy/services/db_context.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../services/auth_service.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,7 +11,7 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
         child: OutlinedButton(
-          onPressed: () => context.read<DbContext>().logout(),
+          onPressed: () {context.read<AuthService>().logout();}, //context.read<DbContext>().logout(),
           style: OutlinedButton.styleFrom(
             backgroundColor: Colors.red,
           ),

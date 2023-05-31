@@ -1,5 +1,4 @@
 class UserModel {
-  final String id;
   final String name;
   final String lastname;
   final String email;
@@ -7,7 +6,6 @@ class UserModel {
   final String bday;
 
   UserModel({
-    required this.id,
     required this.name,
     required this.lastname,
     required this.email,
