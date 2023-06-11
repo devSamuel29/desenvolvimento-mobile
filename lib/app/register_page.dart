@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:bugetbuddy/services/auth_service.dart';
 
@@ -40,45 +39,6 @@ class _RegisterPage extends State<RegisterPage> {
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
-
-  // Widget nameInput() {
-  //   return TextFormField(
-  //     controller: name,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return 'O campo "nome" é obrigatório';
-  //       }
-  //       return null;
-  //     },
-  //     decoration: InputDecoration(
-  //       border: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(15),
-  //       ),
-  //       icon: Icon(Icons.abc_rounded),
-  //       hintText: "Digite seu email...",
-  //       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-  //     ),
-  //   );
-  // }
-
-  // Widget lastnameInput() {
-  //   return TextFormField(
-  //     controller: lastname,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return 'O campo "sobrenome" é obrigatório';
-  //       }
-  //     },
-  //     decoration: InputDecoration(
-  //       border: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(15),
-  //       ),
-  //       icon: Icon(Icons.abc_rounded),
-  //       hintText: "Digite seu sobrenome...",
-  //       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-  //     ),
-  //   );
-  // }
 
   Widget emailInput() {
     return TextFormField(

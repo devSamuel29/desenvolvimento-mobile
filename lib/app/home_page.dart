@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   Widget bottomNavigation() {
     return BottomNavigationBar(
       currentIndex: _selectedIndex,
@@ -82,12 +81,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget addCash() {
+    return ElevatedButton.icon(
+      onPressed: () {      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.green,
+      ),
+      icon: Icon(
+        Icons.attach_money,
+        color: Colors.white,
+      ),
+      label: Text(
+        'Adicionar dinheiro',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  // Widget addExpense() {}
+
   @override
   Widget build(BuildContext context) {
     Widget? bodyWidget;
 
     if (_selectedIndex == 0) {
-      bodyWidget = Text('Olá Mundo');
+      bodyWidget = addCash();
     } else if (_selectedIndex == 1) {
       bodyWidget = Column(
         mainAxisAlignment: MainAxisAlignment.center,
