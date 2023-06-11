@@ -137,14 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  dson_adapter:
-    dependency: "direct main"
-    description:
-      name: dson_adapter
-      sha256: "2a8449a784ba39b61876928f85f8889a9bc80d07f0dbfc5d4122c9f3d7f8ef60"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0+2"
   fake_async:
     dependency: transitive
     description:
@@ -493,6 +485,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  unicons:
+    dependency: "direct main"
+    description:
+      name: unicons
+      sha256: dbfcf93ff4d4ea19b324113857e358e4882115ab85db04417a4ba1c72b17a670
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   universal_io:
     dependency: transitive
     description:

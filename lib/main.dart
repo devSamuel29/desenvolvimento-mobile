@@ -15,12 +15,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AuthService()),
-        ChangeNotifierProvider(create: (context) => GoogleSignInBugetBuddy()),
-      ],
+  runApp(MultiProvider(
+    providers: [
+      Provider(create: (context) => AuthService()),
+      Provider(create: (context) => GoogleSignInBugetBuddy()),
+    ],
     child: const MyApp(),
   ));
 }

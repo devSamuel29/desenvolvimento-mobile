@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:bugetbuddy/services/auth_service.dart';
 
+import '../routes.dart';
 import '../services/google_sign_in.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -91,6 +92,7 @@ class _RegisterPage extends State<RegisterPage> {
       decoration: InputDecoration(
         labelText: "Email",
         prefixIcon: Icon(Icons.email_rounded),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       ),
     );
   }
@@ -118,6 +120,7 @@ class _RegisterPage extends State<RegisterPage> {
             });
           },
         ),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       ),
     );
   }
@@ -153,78 +156,12 @@ class _RegisterPage extends State<RegisterPage> {
     );
   }
 
-  Widget loginWithGoogleWidget() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: EdgeInsets.all(4),
-            child: IconButton(
-              onPressed: () {
-                loginWithGoogle();
-              },
-              icon: Icon(
-                FontAwesomeIcons.google,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          SizedBox(width: 8),
-          Text(
-            "Entrar com Google",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget loginWithFacebook() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: EdgeInsets.all(4),
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                FontAwesomeIcons.facebook,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          SizedBox(width: 8),
-          Text(
-            "Entrar com Facebook",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
+  Widget toRegisterPage() {
+    return TextButton(
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, LOGIN_PAGE);
+        },
+        child: Text("Clique aqui para logar-se"));
   }
 
   @override
@@ -254,23 +191,8 @@ class _RegisterPage extends State<RegisterPage> {
                   SizedBox(height: 10),
                   submitButton(),
                   SizedBox(height: 10),
-                  Divider(),
+                  toRegisterPage(),
                   SizedBox(height: 10),
-                  Column(
-                    children: [
-                      Text(
-                        "Ou entre com:",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      loginWithGoogleWidget(),
-                      SizedBox(height: 10),
-                      loginWithFacebook()
-                    ],
-                  ),
                 ],
               ),
             ),

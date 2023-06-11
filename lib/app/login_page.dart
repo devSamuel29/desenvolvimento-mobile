@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:unicons/unicons.dart';
 import 'package:bugetbuddy/services/auth_service.dart';
 
+import '../routes.dart';
 import '../services/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,18 +20,38 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   bool _obscureText = true;
 
-  login() async {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final isLoggedIn = await context.read<AuthService>().verifyUserLoginState();
+
+      if (isLoggedIn) {
+        Navigator.pushReplacementNamed(context, HOME_PAGE);
+      }
+    });
+  }
+
+  Future<void> login() async {
     try {
-      await context.read<AuthService>().login(email.text, password.text);
+      final isLogged =
+          await context.read<AuthService>().login(email.text, password.text);
+      if (isLogged) {
+        Navigator.pushReplacementNamed(context, HOME_PAGE);
+      }
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
 
-  loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     try {
-      await context.read<GoogleSignInBugetBuddy>().googleLogin();
+      final isLogged =
+          await context.read<GoogleSignInBugetBuddy>().googleLogin();
+      if (isLogged) {
+        Navigator.pushReplacementNamed(context, HOME_PAGE);
+      }
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
@@ -110,81 +132,43 @@ class _LoginPageState extends State<LoginPage> {
   Widget toRegisterPage() {
     return TextButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/register');
+          Navigator.pushReplacementNamed(context, REGISTER_PAGE);
         },
         child: Text("Novo usuário? clique aqui para cadastrar-se"));
   }
 
   Widget loginWithGoogleWidget() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(10),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(10),
+      onPressed: loginWithGoogle,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 16,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              UniconsLine.google,
+              color: Colors.white,
             ),
-            padding: EdgeInsets.all(4),
-            child: IconButton(
-              onPressed: () {
-                loginWithGoogle();
-              },
-              icon: Icon(
-                FontAwesomeIcons.google,
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              "Entrar com Google",
+              style: TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          SizedBox(width: 8),
-          Text(
-            "Entrar com Google",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget loginWithFacebook() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: EdgeInsets.all(4),
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                FontAwesomeIcons.facebook,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          SizedBox(width: 8),
-          Text(
-            "Entrar com Facebook",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -203,11 +187,13 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Entrar",
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w800,
-                      )),
+                  Text(
+                    "Entrar",
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
                   emailInput(),
                   SizedBox(height: 10),
                   passwordInput(),
@@ -227,8 +213,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: 10),
                       loginWithGoogleWidget(),
-                      SizedBox(height: 10),
-                      loginWithFacebook()
                     ],
                   ),
                 ],
