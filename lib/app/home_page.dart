@@ -184,8 +184,6 @@ class _HomePageState extends State<HomePage> {
       bodyWidget = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('${_addCashController.text}'),
-          Text('${_addExpenseController.text}'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
