@@ -17,6 +17,9 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   TextEditingController _addCashController = TextEditingController();
   TextEditingController _addExpenseController = TextEditingController();
+  var valorNovo = "0.00";
+  var valorRetirado = "0.00";
+
 
   logout() async {
     try {
@@ -121,6 +124,10 @@ class _HomePageState extends State<HomePage> {
           ),
           ElevatedButton(
             onPressed: () {
+              setState(() {
+                valorNovo = _addCashController.text;
+                _addCashController.text = "";
+              });
               Navigator.of(context).pop();
             },
             child: Text('Adicionar'),
@@ -167,6 +174,11 @@ class _HomePageState extends State<HomePage> {
           ),
           ElevatedButton(
             onPressed: () {
+              setState(() {
+
+                valorRetirado = _addExpenseController.text;
+                _addExpenseController.text = "";
+              });
               Navigator.of(context).pop();
             },
             child: Text('Adicionar'),
@@ -179,24 +191,176 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Widget? bodyWidget;
-
     if (_selectedIndex == 0) {
-      bodyWidget = Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('${_addCashController.text}'),
-          Text('${_addExpenseController.text}'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      bodyWidget = Padding(
+        padding: const EdgeInsets.only(right: 30, left: 30),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              addCash(),
-              SizedBox(
-                width: 10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const CircleAvatar(minRadius: 24),
+                  const SizedBox(width: 30),
+                  Text("Olá,\n Samuel", style: TextStyle(
+                    fontSize: 30
+                  )),
+                ],
+              ),const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("R\$ 100,00", style: TextStyle(
+                    fontSize: 40
+                  ))
+                ],
               ),
-              addExpense(),
+              const SizedBox(height: 10),
+              Text("Saldo geral"),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.indigoAccent,
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                constraints: BoxConstraints(
+                  minHeight: 400
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: double.infinity,
+                        minHeight: 80
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.monetization_on, size: 40),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Saldo guardado"),
+                              Text("R\$ $valorNovo", style: TextStyle(
+                                fontSize: 25
+                              ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        addExpense(),
+                        const SizedBox(width: 10),
+                        addCash(),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      constraints: BoxConstraints(
+                          minWidth: double.infinity,
+                          minHeight: 80
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Meta"),
+                              Text("R\$ 500,00", style: TextStyle(
+                                  fontSize: 25
+                              ))
+                            ],
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Total disponivel"),
+                              Text("R\$ 300,00", style: TextStyle(
+                                  fontSize: 25
+                              ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      constraints: BoxConstraints(
+                          minWidth: double.infinity,
+                          minHeight: 80
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Contas a pagar"),
+                              Text("R\$ $valorRetirado", style: TextStyle(
+                                  fontSize: 25
+                              ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      constraints: BoxConstraints(
+                          minWidth: double.infinity,
+                          minHeight: 80
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Indicações"),
+                              Row(
+                                children: [
+                                  Icon(Icons.book),
+                                  Icon(Icons.airplanemode_active),
+                                  Icon(Icons.mic_external_on_sharp),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
             ],
           ),
-        ],
+        ),
       );
     } else if (_selectedIndex == 1) {
       bodyWidget = Column(
@@ -208,6 +372,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.deepPurple,
       body: Center(child: bodyWidget),
       bottomNavigationBar: bottomNavigation(),
     );
