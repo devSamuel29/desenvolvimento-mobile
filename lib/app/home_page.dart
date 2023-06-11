@@ -1,6 +1,7 @@
 import 'package:bugetbuddy/services/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 import '../routes.dart';
 import '../services/auth_service.dart';
@@ -14,6 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  TextEditingController _addCashController = TextEditingController();
+  TextEditingController _addExpenseController = TextEditingController();
 
   logout() async {
     try {
@@ -82,32 +85,119 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget addCash() {
-    return ElevatedButton.icon(
-      onPressed: () {      },
+    return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        shape: CircleBorder(),
         backgroundColor: Colors.green,
+        padding: EdgeInsets.all(12),
       ),
-      icon: Icon(
+      onPressed: onPressedAddCash,
+      child: Icon(
         Icons.attach_money,
         color: Colors.white,
-      ),
-      label: Text(
-        'Adicionar dinheiro',
-        style: TextStyle(
-          color: Colors.white,
-        ),
+        size: 40,
       ),
     );
   }
 
-  // Widget addExpense() {}
+  onPressedAddCash() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Adicionar dinheiro'),
+        content: TextField(
+          controller: _addCashController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: 'Valor',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Adicionar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget addExpense() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: CircleBorder(),
+        backgroundColor: Colors.red,
+        padding: EdgeInsets.all(12),
+      ),
+      onPressed: onPressedAddExpense,
+      child: Icon(
+        Icons.money_off,
+        color: Colors.white,
+        size: 40,
+      ),
+    );
+  }
+
+  onPressedAddExpense() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Adicionar despesa'),
+        content: TextField(
+          controller: _addExpenseController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: 'Valor',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Adicionar'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget? bodyWidget;
 
     if (_selectedIndex == 0) {
-      bodyWidget = addCash();
+      bodyWidget = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('${_addCashController.text}'),
+          Text('${_addExpenseController.text}'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              addCash(),
+              SizedBox(
+                width: 10,
+              ),
+              addExpense(),
+            ],
+          ),
+        ],
+      );
     } else if (_selectedIndex == 1) {
       bodyWidget = Column(
         mainAxisAlignment: MainAxisAlignment.center,
