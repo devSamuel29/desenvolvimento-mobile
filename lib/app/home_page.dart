@@ -1,6 +1,7 @@
 import 'package:bugetbuddy/services/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../routes.dart';
 import '../services/auth_service.dart';
@@ -310,9 +311,42 @@ class _HomePageState extends State<HomePage> {
                               Text("Indicações"),
                               Row(
                                 children: [
-                                  Icon(Icons.book),
-                                  Icon(Icons.airplanemode_active),
-                                  Icon(Icons.mic_external_on_sharp),
+                                  GestureDetector(
+                                      child: Icon(Icons.book),
+                                      onTap: () {
+                                          canLaunchUrl(Uri.parse("https://meubolsoemdia.com.br/e-books")).then((value) async{
+                                            if (!value){
+                                              await launchUrl(Uri.parse("https://meubolsoemdia.com.br/e-books"));
+                                            }else{
+                                              print("Erro ao executar link");
+                                            }
+                                          });
+                                      },
+                                  ),
+                                  GestureDetector(
+                                      child: Icon(Icons.airplanemode_active),
+                                      onTap: (){
+                                        canLaunchUrl(Uri.parse("https://www.booking.com/index.pt-br.html?gclid=CjwKCAjwp6CkBhB_EiwAlQVyxSFLmBI-RacTpA-5PcrT1vqwEmX6G-3Yel_Q1mySgAWM-zSExxJCrRoCxhYQAvD_BwE;label=pt-br-booking-desktop-9_uvqir24qvA6x6xGiDvCQS652796015463%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp1001538%3Ali%3Adec%3Adm;ws=;aid=2311236")).then((value) async{
+                                          if (!value){
+                                            await launchUrl(Uri.parse("https://meubolsoemdia.com.br/e-books"));
+                                          }else{
+                                            print("Erro ao executar link");
+                                          }
+                                        });
+                                      },
+                                  ),
+                                  GestureDetector(
+                                      child: Icon(Icons.mic_external_on_sharp),
+                                      onTap: (){
+                                        canLaunchUrl(Uri.parse("https://g1.globo.com/podcast/educacao-financeira/")).then((value) async{
+                                          if (!value){
+                                            await launchUrl(Uri.parse("https://meubolsoemdia.com.br/e-books"));
+                                          }else{
+                                            print("Erro ao executar link");
+                                          }
+                                        });
+                                      },
+                                  ),
                                 ],
                               )
                             ],
